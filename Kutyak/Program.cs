@@ -32,7 +32,7 @@ class MainClass
             kutyaFajtak.Add(new KutyaFajta(int.Parse(adat[0]),adat[1],adat[2]));
         }
         olvas.Close();
-        Console.WriteLine(kutyaFajtak.Count);
+        //Console.WriteLine(kutyaFajtak.Count);
     }
     static void BeolvasasKutyak()
     {
@@ -45,7 +45,19 @@ class MainClass
                 int.Parse(adat[3]), adat[4]));
         }
         olvas.Close();
-        Console.WriteLine(kutyaLista.Count);
+        foreach (var i in kutyaLista)
+        {
+            Console.WriteLine(i.Eletkor);
+        }
+    }
+    static void AtlagEletkor()
+    {
+        //2 tizedesre az átlagéletkort
+        double atlag;
+        int sum = 0;
+        foreach (var i in kutyaLista)
+        {
+        }
     }
     public static void Main(string[] args)
     {
@@ -53,6 +65,7 @@ class MainClass
         Harmadik();
         BeolvasasKutyaFajta();
         BeolvasasKutyak();
+        AtlagEletkor();
         Console.ReadKey();
     }
 }
