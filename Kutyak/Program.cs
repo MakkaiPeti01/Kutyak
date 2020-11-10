@@ -5,7 +5,9 @@ using System.Collections.Generic;
 class MainClass
 {
     static List<KutyaNev> kutyaNevek = new List<KutyaNev>();
-    public static void Main(string[] args)
+    static List<KutyaFajta> kutyaFajtak = new List<KutyaFajta>();
+    static List<Kutya> kutyaLista = new List<Kutya>();
+    static void Beolvasas()
     {
         StreamReader be = new StreamReader("KutyaNevek.csv");
         be.ReadLine();
@@ -15,11 +17,42 @@ class MainClass
             kutyaNevek.Add(new KutyaNev(Convert.ToInt32(adat[0]), adat[1]));
         }
         be.Close();
-        /*foreach (var k in kutyaNevek)
-        {
-            Console.WriteLine(k.Nev);
-        }*/
+    }
+    static void Harmadik()
+    {
         Console.WriteLine("3. feladat: Kutyanevek száma: {0}", kutyaNevek.Count);
+    }
+    static void BeolvasasKutyaFajta()
+    {
+        StreamReader olvas = new StreamReader("KutyaFajtak.csv");
+        olvas.ReadLine();
+        while (!olvas.EndOfStream)
+        {
+            string[] adat = olvas.ReadLine().Split(';');
+            kutyaFajtak.Add(new KutyaFajta(int.Parse(adat[0]),adat[1],adat[2]));
+        }
+        olvas.Close();
+        Console.WriteLine(kutyaFajtak.Count);
+    }
+    static void BeolvasasKutyak()
+    {
+        StreamReader olvas = new StreamReader("Kutyak.csv");
+        olvas.ReadLine();
+        while (!olvas.EndOfStream)
+        {
+            string[] adat = olvas.ReadLine().Split(';');
+            kutyaLista.Add(new Kutya(int.Parse(adat[0]), int.Parse(adat[1]), int.Parse(adat[2]), 
+                int.Parse(adat[3]), adat[4]));
+        }
+        olvas.Close();
+        Console.WriteLine(kutyaLista.Count);
+    }
+    public static void Main(string[] args)
+    {
+        Beolvasas();
+        Harmadik();
+        BeolvasasKutyaFajta();
+        BeolvasasKutyak();
         Console.ReadKey();
     }
 }
