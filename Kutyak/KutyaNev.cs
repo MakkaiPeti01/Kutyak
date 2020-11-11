@@ -8,6 +8,10 @@ using System.Threading.Tasks;
     {
         private int id;
         private string nev;
+        public int ID
+        {
+        get { return id; }
+        }
         public string Nev
         {
             get { return nev; }
