@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 class MainClass
 {
@@ -92,7 +93,7 @@ class MainClass
                 nev = i.Nev;
             }
         }
-        Console.WriteLine(index);
+        //Console.WriteLine(index);
         Console.WriteLine($"7. feladat: a Legidősebb kutya neve és fajtája: {nev}, {fajta}");
     }
     static void Nyolcadik()
@@ -146,7 +147,7 @@ class MainClass
                 datum[d.Vizsgalat]++;
             }
         }
-        Console.WriteLine(datum.Count);
+        //Console.WriteLine(datum.Count);
         int max = 0;
         string nap = "";
         foreach (var i in datum)
@@ -163,14 +164,44 @@ class MainClass
     {
         //kutyák neve, fajta alapján hány darab van belőle csőkkenőben
         //Szofi idje(244 KUTYANEVEK) A KUTYÁK.CSV-ben 244(szofi-->230 kutyaid) 230 id -->Lakeland terrier (KUTYAFAJTÁK.CSV)
-        int index = 0;
         foreach (var i in kutyaNevek)
         {
             if (!nevek.ContainsKey(i.Nev))
             {
-                nevek.Add(i.Nev, 0);
+                nevek.Add(i.Nev, 1);
             }
         }
+        foreach (var i in kutyaLista)
+        {
+            foreach (var k in kutyaNevek)
+            {
+                if (i.Nev_ID == k.ID)
+                {
+                    nevek[k.Nev]++;
+                }
+            }
+        }
+        foreach (var i in kutyaNevek)
+        {
+            nevek[i.Nev]--;
+            if (nevek[i.Nev] == 0)
+            {
+                nevek[i.Nev] = 1;
+            }
+        }
+        //foreach (var i in nevek)
+        //{
+        //    Console.WriteLine("{0} {1}",i.Value,i.Key);
+        //}
+        Console.WriteLine("10. feladat: névstatisztika.txt");
+        StreamWriter iro = new StreamWriter("névstatisztika.txt");
+        //Ezt a neten találtam remélem nem baj, nem bonyolult azért mertem így hagyni :D
+        //A diksöneri jó feltöltése nagyon krumplis elnézést érte, de működik az a lényeg  
+        foreach (KeyValuePair<string, int> i in nevek.OrderByDescending(key => key.Value))
+        {
+            iro.WriteLine("{0},{1}", i.Key, i.Value);
+        }
+        iro.Close();
     }
     public static void Main(string[] args)
     {
